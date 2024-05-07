@@ -67,10 +67,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 
-#第三方配置信息
-qq:
-  app-id: "QQ APPID"
-  user-info-url: "https://graph.qq.com/user/get_user_info?openid={openid}&access_token={access_token}&oauth_consumer_key={oauth_consumer_key}"
 
 weibo:
   app-id: "312764169"
