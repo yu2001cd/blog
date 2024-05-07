@@ -194,42 +194,6 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthDao, UserAuth> impl
         return new PageDTO<UserBackDTO>(userBackDTOList, count);
     }
 
-    @Transactional(rollbackFor = ServeException.class)
-    @Override
-    public UserInfoDTO qqLogin(String openId, String accessToken) {
-        //创建登录信息
-        UserInfoDTO userInfoDTO = null;
-        //校验该第三方账户信息是否存在
-        UserAuth user = getUserAuth(openId, LoginConst.QQ);
-        if (user != null && user.getUserInfoId() != null) {
-            //存在则返回数据库中的用户信息登录封装
-            userInfoDTO = getUserInfoDTO(user);
-        } else {
-            //不存在通过openId和accessToken获取QQ用户信息，并创建用户
-            Map<String, String> formData = new HashMap<>(16);
-            //定义请求参数
-            formData.put("openid", openId);
-            formData.put("access_token", accessToken);
-            formData.put("oauth_consumer_key", QQ_APP_ID);
-            //获取QQ返回的用户信息
-            String result = restTemplate.getForObject(QQ_USER_INFO_URL, String.class, formData);
-            Map<String, String> userInfoMap = JSON.parseObject(result, Map.class);
-            //获取ip地址
-            String ipAddr = IpUtil.getIpAddr(request);
-            String ipSource = IpUtil.getIpSource(ipAddr);
-            //将账号和信息存入数据库(登录ip地址来源)
-            UserInfo userInfo = new UserInfo(userInfoMap.get("nickname"), userInfoMap.get("figureurl_qq_1"));
-            userInfoDao.insert(userInfo);
-            UserAuth userAuth = new UserAuth(userInfo.getId(), openId, accessToken, LoginConst.QQ, ipAddr, ipSource);
-            userAuthDao.insert(userAuth);
-            //封装登录信息
-            userInfoDTO = new UserInfoDTO(userAuth.getId(), userInfo, null, null);
-        }
-        //将登录信息放入springSecurity管理
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(JSON.toJSONString(userInfoDTO), null, new ArrayList<>());
-        SecurityContextHolder.getContext().setAuthentication(auth);
-        return userInfoDTO;
-    }
 
     @Transactional(rollbackFor = ServeException.class)
     @Override

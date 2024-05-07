@@ -63,15 +63,5 @@ public class UserAuthController {
         return new Result(true, StatusConst.OK, "登录成功！", userAuthService.weiboLogin(code));
     }
 
-    @ApiOperation(value = "qq登录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "openId", value = "openId", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "accessToken", value = "accessToken", required = true, dataType = "String")
-    })
-    @PostMapping("/users/oauth/qq")
-    private Result<UserInfoDTO> qqLogin(String openId, String accessToken) {
-        return new Result(true, StatusConst.OK, "登录成功！", userAuthService.qqLogin(openId, accessToken));
-    }
-
 }
 

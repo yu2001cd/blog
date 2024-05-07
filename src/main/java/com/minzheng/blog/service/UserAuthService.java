@@ -28,14 +28,6 @@ public interface UserAuthService extends IService<UserAuth> {
      */
     void saveUser(UserVO user);
 
-    /**
-     * qq登录
-     *
-     * @param openId      qq openId
-     * @param accessToken qq token
-     * @return 用户登录信息
-     */
-    UserInfoDTO qqLogin(String openId, String accessToken);
 
     /**
      * 微博登录
