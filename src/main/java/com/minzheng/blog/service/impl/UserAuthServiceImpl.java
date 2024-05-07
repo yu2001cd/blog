@@ -63,18 +63,6 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthDao, UserAuth> impl
     private static final long EXPIRE_TIME = 15 * 60 * 1000;
 
     /**
-     * qq appId
-     */
-    @Value("${qq.app-id}")
-    private String QQ_APP_ID;
-
-    /**
-     * qq获取用户信息接口地址
-     */
-    @Value("${qq.user-info-url}")
-    private String QQ_USER_INFO_URL;
-
-    /**
      * 微博appId
      */
     @Value("${weibo.app-id}")
