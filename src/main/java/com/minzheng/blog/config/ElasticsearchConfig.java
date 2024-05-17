@@ -11,7 +11,7 @@ public class ElasticsearchConfig {
     @Bean
     public RestHighLevelClient buildRestHighLevelClient(){
         RestHighLevelClient client= new RestHighLevelClient(RestClient.builder(
-                HttpHost.create("http://127.0.0.1:9200")
+                HttpHost.create("http://192.168.231.128:9200")
         ));
         return client;
     }
